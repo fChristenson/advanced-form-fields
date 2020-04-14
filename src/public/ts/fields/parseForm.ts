@@ -14,7 +14,13 @@ export interface IMoney {
   currency: string;
 }
 
-export const parseForm = <T>(formTypes: IFormTypes, form: any): T => {
+export type FormDataValue = string | number | IValueUnit | IMoney;
+
+interface IFormData {
+  [key: string]: FormDataValue;
+}
+
+export const parseForm = (formTypes: IFormTypes, form: any): IFormData => {
   const names = Object.keys(formTypes);
 
   return names.reduce((formData: any, name: string) => {
@@ -40,7 +46,7 @@ export const parseForm = <T>(formTypes: IFormTypes, form: any): T => {
   }, {});
 };
 
-const getValue = (field: any, fieldType: FieldType) => {
+const getValue = (field: any, fieldType: FieldType): FormDataValue => {
   let value;
 
   switch (fieldType) {
@@ -71,4 +77,38 @@ const getValue = (field: any, fieldType: FieldType) => {
   }
 
   return value;
+};
+
+export const isString = (val: any): string => {
+  const isString = typeof val === "string";
+  if (!isString) throw new Error(`${val} is not a string`);
+
+  return val as string;
+};
+
+export const isNumber = (val: any): number => {
+  const isNumber = typeof val === "number";
+  if (!isNumber) throw new Error(`${val} is not a number`);
+
+  return val as number;
+};
+
+export const isValueUnit = (val: any): IValueUnit => {
+  const isNumber = typeof val.amount === "number";
+  const isString = typeof val.unit === "string";
+
+  if (!isNumber || !isString)
+    throw new Error(`${JSON.stringify(val)} is not a IValueUnit`);
+
+  return { amount: val.amount, unit: val.unit };
+};
+
+export const isMoney = (val: any): IMoney => {
+  const isNumber = typeof val.amount === "number";
+  const isString = typeof val.currency === "string";
+
+  if (!isNumber || !isString)
+    throw new Error(`${JSON.stringify(val)} is not a IMoney`);
+
+  return { amount: val.amount, currency: val.currency };
 };

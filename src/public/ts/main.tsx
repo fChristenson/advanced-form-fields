@@ -9,7 +9,16 @@ import {
   ValueUnitField,
   IOption,
 } from "./fields/ValueUnitField/ValueUnitField";
-import { parseForm, IFormTypes, IMoney, IValueUnit } from "./fields/parseForm";
+import {
+  parseForm,
+  IFormTypes,
+  IMoney,
+  IValueUnit,
+  isString,
+  isNumber,
+  isMoney,
+  isValueUnit,
+} from "./fields/parseForm";
 
 const formTypes: IFormTypes = {
   username: FieldType.TEXT_FIELD,
@@ -28,9 +37,16 @@ interface IForm {
 const onSubmit = (e: any) => {
   e.preventDefault();
   e.stopPropagation();
-  const data: IForm = parseForm<IForm>(formTypes, e.target);
+  const data = parseForm(formTypes, e.target);
 
-  console.log(data);
+  const formdata: IForm = {
+    username: isString(data.username),
+    age: isNumber(data.age),
+    income: isMoney(data.income),
+    taxes: isValueUnit(data.taxes),
+  };
+
+  console.log(formdata);
 };
 
 const units: IOption[] = [
