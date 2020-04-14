@@ -8,4 +8,4 @@
 
 ## Notes
 
-Some notes
+In this project I want to show you a few ideas on how you can create fields for advanced data structures.
