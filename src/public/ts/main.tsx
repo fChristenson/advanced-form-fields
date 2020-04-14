@@ -9,31 +9,26 @@ import {
   ValueUnitField,
   IOption,
 } from "./fields/ValueUnitField/ValueUnitField";
-import { parseForm, IField } from "./fields/parseForm";
+import { parseForm, IFormTypes, IMoney, IValueUnit } from "./fields/parseForm";
 
-const fields: IField[] = [
-  {
-    name: "username",
-    type: FieldType.TEXT_FIELD,
-  },
-  {
-    name: "age",
-    type: FieldType.NUMBER_FIELD,
-  },
-  {
-    name: "income",
-    type: FieldType.MONEY_FIELD,
-  },
-  {
-    name: "taxes",
-    type: FieldType.VALUE_UNIT_FIELD,
-  },
-];
+const formTypes: IFormTypes = {
+  username: FieldType.TEXT_FIELD,
+  age: FieldType.NUMBER_FIELD,
+  income: FieldType.MONEY_FIELD,
+  taxes: FieldType.VALUE_UNIT_FIELD,
+};
+
+interface IForm {
+  username: string;
+  age: number;
+  income: IMoney;
+  taxes: IValueUnit;
+}
 
 const onSubmit = (e: any) => {
   e.preventDefault();
   e.stopPropagation();
-  const data = parseForm(fields, e.target);
+  const data: IForm = parseForm<IForm>(formTypes, e.target);
 
   console.log(data);
 };
