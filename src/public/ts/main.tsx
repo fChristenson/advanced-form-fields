@@ -9,16 +9,33 @@ import {
   ValueUnitField,
   IOption,
 } from "./fields/ValueUnitField/ValueUnitField";
+import { parseForm, IField } from "./fields/parseForm";
+
+const fields: IField[] = [
+  {
+    name: "username",
+    type: FieldType.TEXT_FIELD,
+  },
+  {
+    name: "age",
+    type: FieldType.NUMBER_FIELD,
+  },
+  {
+    name: "income",
+    type: FieldType.MONEY_FIELD,
+  },
+  {
+    name: "taxes",
+    type: FieldType.VALUE_UNIT_FIELD,
+  },
+];
 
 const onSubmit = (e: any) => {
   e.preventDefault();
   e.stopPropagation();
-  const values = Object.values(e.target)
-    .filter((t: any) => t.name)
-    .map((t: any) => t.value)
-    .filter((v) => !!v);
+  const data = parseForm(fields, e.target);
 
-  alert(values);
+  console.log(data);
 };
 
 const units: IOption[] = [
@@ -50,7 +67,7 @@ const FormPage = () => {
       <TextField name="username" placeholder="Username" />
       <NumberField name="age" placeholder="Age" />
       <MoneyField name="income" currency="SEK" placeholder="Income/SEK" />
-      <ValueUnitField name="income" units={units} placeholder="Taxes" />
+      <ValueUnitField name="taxes" units={units} placeholder="Taxes" />
       <input type="submit" />
     </form>
   );

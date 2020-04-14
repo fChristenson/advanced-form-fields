@@ -18,7 +18,7 @@ export const ValueUnitField: React.FunctionComponent<IProps> = ({
   units,
 }) => {
   const [value, setValue] = React.useState("");
-  const [unit, setUnit] = React.useState<IOption | undefined>();
+  const [unit, setUnit] = React.useState<IOption | undefined>(units[0]);
 
   return (
     <>
