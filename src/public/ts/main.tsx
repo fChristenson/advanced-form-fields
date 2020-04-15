@@ -14,10 +14,10 @@ import {
   IFormTypes,
   IMoney,
   IValueUnit,
-  isString,
-  isNumber,
-  isMoney,
-  isValueUnit,
+  asString,
+  asNumber,
+  asMoney,
+  asValueUnit,
 } from "./fields/parseForm";
 
 const formTypes: IFormTypes = {
@@ -26,6 +26,13 @@ const formTypes: IFormTypes = {
   income: FieldType.MONEY_FIELD,
   taxes: FieldType.VALUE_UNIT_FIELD,
 };
+
+enum FieldNames {
+  USERNAME = "username",
+  AGE = "age",
+  INCOME = "income",
+  TAXES = "taxes",
+}
 
 interface IForm {
   username: string;
@@ -40,10 +47,10 @@ const onSubmit = (e: any) => {
   const data = parseForm(formTypes, e.target);
 
   const formdata: IForm = {
-    username: isString(data.username),
-    age: isNumber(data.age),
-    income: isMoney(data.income),
-    taxes: isValueUnit(data.taxes),
+    username: asString(data[FieldNames.USERNAME]),
+    age: asNumber(data[FieldNames.AGE]),
+    income: asMoney(data[FieldNames.INCOME]),
+    taxes: asValueUnit(data[FieldNames.TAXES]),
   };
 
   console.log(formdata);
@@ -75,10 +82,18 @@ const FormPage = () => {
       }}
       onSubmit={onSubmit}
     >
-      <TextField name="username" placeholder="Username" />
-      <NumberField name="age" placeholder="Age" />
-      <MoneyField name="income" currency="SEK" placeholder="Income/SEK" />
-      <ValueUnitField name="taxes" units={units} placeholder="Taxes" />
+      <TextField name={FieldNames.USERNAME} placeholder="Username" />
+      <NumberField name={FieldNames.AGE} placeholder="Age" />
+      <MoneyField
+        name={FieldNames.INCOME}
+        currency="SEK"
+        placeholder="Income/SEK"
+      />
+      <ValueUnitField
+        name={FieldNames.TAXES}
+        units={units}
+        placeholder="Taxes"
+      />
       <input type="submit" />
     </form>
   );

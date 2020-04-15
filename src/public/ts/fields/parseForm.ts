@@ -79,21 +79,21 @@ const getValue = (field: any, fieldType: FieldType): FormDataValue => {
   return value;
 };
 
-export const isString = (val: any): string => {
+export const asString = (val: any): string => {
   const isString = typeof val === "string";
   if (!isString) throw new Error(`${val} is not a string`);
 
   return val as string;
 };
 
-export const isNumber = (val: any): number => {
+export const asNumber = (val: any): number => {
   const isNumber = typeof val === "number";
   if (!isNumber) throw new Error(`${val} is not a number`);
 
   return val as number;
 };
 
-export const isValueUnit = (val: any): IValueUnit => {
+export const asValueUnit = (val: any): IValueUnit => {
   const isNumber = typeof val.amount === "number";
   const isString = typeof val.unit === "string";
 
@@ -103,7 +103,7 @@ export const isValueUnit = (val: any): IValueUnit => {
   return { amount: val.amount, unit: val.unit };
 };
 
-export const isMoney = (val: any): IMoney => {
+export const asMoney = (val: any): IMoney => {
   const isNumber = typeof val.amount === "number";
   const isString = typeof val.currency === "string";
 
