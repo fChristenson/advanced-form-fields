@@ -20,11 +20,8 @@ interface IFormData {
   [key: string]: FormDataValue;
 }
 
-export const parseForm = (formTypes: IFormTypes, form: any): IFormData => {
-  const names = Object.keys(formTypes);
-
-  return names.reduce((formData: any, name: string) => {
-    const type = formTypes[name];
+export const parseForm = (fieldNames: string[], form: any): IFormData => {
+  return fieldNames.reduce((formData: any, name: string) => {
     const field = form[name];
 
     if (!field) throw new Error(`${name} not found in form`);
@@ -32,11 +29,6 @@ export const parseForm = (formTypes: IFormTypes, form: any): IFormData => {
     const fieldType: FieldType | undefined = field.getAttribute(
       "data-fieldtype"
     ) as FieldType;
-
-    if (type !== fieldType)
-      throw new Error(
-        `fieldType ${type} did not match form fieldType ${fieldType}`
-      );
 
     const value = getValue(field, fieldType);
 

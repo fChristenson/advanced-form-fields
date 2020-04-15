@@ -20,13 +20,6 @@ import {
   asValueUnit,
 } from "./fields/parseForm";
 
-const formTypes: IFormTypes = {
-  username: FieldType.TEXT_FIELD,
-  age: FieldType.NUMBER_FIELD,
-  income: FieldType.MONEY_FIELD,
-  taxes: FieldType.VALUE_UNIT_FIELD,
-};
-
 enum FieldNames {
   USERNAME = "username",
   AGE = "age",
@@ -44,7 +37,7 @@ interface IForm {
 const onSubmit = (e: any) => {
   e.preventDefault();
   e.stopPropagation();
-  const data = parseForm(formTypes, e.target);
+  const data = parseForm(Object.values(FieldNames), e.target);
 
   const formdata: IForm = {
     username: asString(data[FieldNames.USERNAME]),

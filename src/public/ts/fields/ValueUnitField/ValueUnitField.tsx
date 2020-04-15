@@ -33,7 +33,7 @@ export const ValueUnitField: React.FunctionComponent<IProps> = ({
           style={{ flex: 1, marginRight: "4px" }}
           type="number"
           placeholder={placeholder}
-          onChange={(e: any) => setValue(`${e.target.value} ${unit?.value}`)}
+          onChange={(e: any) => setValue(e.target.value)}
         />
         <select
           onChange={(e: any) =>
@@ -51,7 +51,7 @@ export const ValueUnitField: React.FunctionComponent<IProps> = ({
       <input
         type="hidden"
         name={name}
-        value={value}
+        value={`${value} ${unit?.value}`}
         data-fieldtype={FieldType.VALUE_UNIT_FIELD}
       />
     </>
